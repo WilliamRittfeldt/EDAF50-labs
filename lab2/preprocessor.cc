@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 // Function to compute trigrams for a given word
 std::vector<std::string> computeTrigrams(const std::string& word) {
@@ -15,9 +16,10 @@ std::vector<std::string> computeTrigrams(const std::string& word) {
     return trigrams;
 }
 
+
 int main() {
-    std::ifstream inputFile("words_in.txt"); // Replace "input.txt" with your input file name
-    std::ofstream outputFile("words.txt"); // The file where the output will be written
+    std::ifstream inputFile("words_in.txt");
+    std::ofstream outputFile("words_out.txt");
 
     if (!inputFile.is_open() || !outputFile.is_open()) {
         std::cerr << "Error opening file(s)." << std::endl;
