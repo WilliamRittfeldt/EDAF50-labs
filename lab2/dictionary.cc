@@ -6,7 +6,6 @@
 #include "word.h"
 #include "dictionary.h"
 #include <unordered_set>
-#include "preprocessor.cc"
 
 using std::string;
 using std::vector;
@@ -15,8 +14,8 @@ using std::endl;
 #include <fstream>
 #include <iostream>
 
+
 constexpr int maxlen{25};
-vector<Word> words;
 
 Dictionary::Dictionary() {
 	std::ifstream inputFile("words_in.txt");
@@ -27,7 +26,7 @@ Dictionary::Dictionary() {
         int wordLength = word.length();
         if (wordLength <= 25) {
             words[wordLength].push_back(Word(word, computeTrigrams(word)));
-            //cout << "word: " << word << " inserted." << endl;
+            cout << "word: " << word << " inserted into vector" << endl;
         }
     }
 	inputFile.close(); //behövs detta?
@@ -35,9 +34,9 @@ Dictionary::Dictionary() {
 }
 
 bool Dictionary::contains(const string& word) const {
-	if (words.find(word) != words.end()) {
-		return true;
-	} 
+	// if (words.find(word) != words.end()) {
+	// 	return true;
+	// } 
 	return false;
 }
 
@@ -70,5 +69,17 @@ int edit_distance(const std::string& p, const std::string& q) {
         }
     }
     return dp[m][n];
+}
+
+//taken from preprocessor
+std::vector<std::string> computeTrigrams(const std::string& word) {
+    std::vector<std::string> trigrams;
+    for (size_t i = 0; i + 2 < word.size(); ++i) {
+        auto trig = word.substr(i, 3);
+        if (trig.size() == 3) { 
+            trigrams.push_back(word.substr(i, 3));
+        }
+    }
+    return trigrams;
 }
 

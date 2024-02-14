@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "preprocessor.h"
+
 
 // Function to compute trigrams for a given word
 std::vector<std::string> computeTrigrams(const std::string& word) {

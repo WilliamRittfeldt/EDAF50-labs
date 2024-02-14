@@ -27,8 +27,8 @@ all: $(PROGS)
 
 #hello: hello.o #funkar ej 
 
-spell: spell.o dictionary.o word.o preproccesor.o
-	g++ -o spell spell.o dictionary.o word.o preprocessor.o $(LDFLAGS)
+spell: spell.o dictionary.o word.o
+	g++ -o spell spell.o dictionary.o word.o $(LDFLAGS)
 
 # Add a rule for compiling Dictionary.o
 dictionary.o: dictionary.cc
@@ -41,8 +41,8 @@ spell.o: spell.cc
 word.o:	word.cc
 	g++ -c word.cc $(CXXFLAGS) 
 
-preprocessor.o:  preprocessor.cc
-	g++ -o preprocessor preprocessor.cc
+#reprocessor.o:  preprocessor.cc
+#	g++ -o preprocessor preprocessor.cc
 
 
 #test: test_coding

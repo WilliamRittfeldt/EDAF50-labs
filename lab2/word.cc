@@ -15,7 +15,7 @@ string Word::get_word() const {
 
 //Returns how many of the trigrams in t that are present in this word’s trigram vector
 unsigned int Word::get_matches(const vector<string>& t) const {
-	int count = 0;
+	unsigned int count = 0;
 	//sort t
 	std::sort(t.begin(), t.end());
 	std::sort(trigrams.begin(), trigrams.end()); //just in case :))
