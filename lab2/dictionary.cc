@@ -15,13 +15,13 @@ using std::endl;
 #include <fstream>
 #include <iostream>
 
-//std::unordered_set<std::string> words;
 constexpr int maxlen{25};
-vector<Word> words[maxlen];
+vector<Word> words;
 
 Dictionary::Dictionary() {
 	std::ifstream inputFile("words_in.txt");
 	std::string word;
+    vector<Word> words[maxlen];
 
 	while (inputFile >> word) {
         int wordLength = word.length();
@@ -29,8 +29,6 @@ Dictionary::Dictionary() {
             words[wordLength].push_back(Word(word, computeTrigrams(word)));
             //cout << "word: " << word << " inserted." << endl;
         }
-
-		
     }
 	inputFile.close(); //behövs detta?
 
