@@ -31,16 +31,18 @@ preprocessor:  preprocessor.cc
 	g++ -o preprocessor preprocessor.cc
 
 
-spell:	spell.o Dictionary.o 
-	g++ -o spell spell.o Dictionary.o $(LDFLAGS)
+spell:	spell.o dictionary.o 
+	g++ -o spell spell.o dictionary.o $(LDFLAGS)
 
 # Add a rule for compiling Dictionary.o
-Dictionary.o:	Dictionary.cc
+dictionary.o:	dictionary.cc
 	g++ -c Dictionary.cc $(CXXFLAGS)
 
 # Existing rules for spell.o and other objects
 spell.o:	spell.cc
 	g++ -c spell.cc $(CXXFLAGS) 
+
+
 
 #test: test_coding
 #	./test_coding

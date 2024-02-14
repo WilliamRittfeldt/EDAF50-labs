@@ -9,6 +9,8 @@
 
 using std::string;
 using std::vector;
+using std::cout;
+using std::endl;
 #include <fstream>
 #include <iostream>
 
@@ -20,8 +22,10 @@ Dictionary::Dictionary() {
 
 	while (inputFile >> word) {
         words.insert(word);
+		//cout << "word: " << word << " inserted." << endl;
     }
 	inputFile.close(); //behövs detta?
+
 }
 
 bool Dictionary::contains(const string& word) const {

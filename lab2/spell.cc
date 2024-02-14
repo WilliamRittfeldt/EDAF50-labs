@@ -30,6 +30,7 @@ void check_word(const string& word, const Dictionary& dict)
 int main() {
 	Dictionary dict;
 	string word;
+    cout << "Enter word to check" << endl;
 	while (cin >> word) {
 		transform(word.begin(), word.end(), word.begin(), ::tolower);
         check_word(word, dict);
