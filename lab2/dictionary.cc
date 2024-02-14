@@ -6,6 +6,7 @@
 #include "word.h"
 #include "dictionary.h"
 #include <unordered_set>
+#include "preprocessor.cc"
 
 using std::string;
 using std::vector;
@@ -14,15 +15,22 @@ using std::endl;
 #include <fstream>
 #include <iostream>
 
-std::unordered_set<std::string> words;
+//std::unordered_set<std::string> words;
+constexpr int maxlen{25};
+vector<Word> words[maxlen];
 
 Dictionary::Dictionary() {
 	std::ifstream inputFile("words_in.txt");
 	std::string word;
 
 	while (inputFile >> word) {
-        words.insert(word);
-		//cout << "word: " << word << " inserted." << endl;
+        int wordLength = word.length();
+        if (wordLength <= 25) {
+            words[wordLength].push_back(Word(word, computeTrigrams(word)));
+            //cout << "word: " << word << " inserted." << endl;
+        }
+
+		
     }
 	inputFile.close(); //behövs detta?
 
