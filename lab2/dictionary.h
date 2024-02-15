@@ -13,7 +13,7 @@ public:
 	std::vector<std::string> get_suggestions(const std::string& word) const;
 	std::vector<std::string> computeTrigrams(const std::string& word) const;
 private:
-	std::vector<Word> words;
+	std::vector<std::vector<Word>> words;
 };
 
 #endif

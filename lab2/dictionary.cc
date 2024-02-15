@@ -18,10 +18,10 @@ using std::endl;
 
 constexpr int maxlen{25};
 
-Dictionary::Dictionary() {
+Dictionary::Dictionary() : words(maxlen){
 	std::ifstream inputFile("words_in.txt");
 	std::string word;
-    vector<Word> words[maxlen];
+    //vector<Word> words[maxlen];
 
 	while (inputFile >> word) {
         int wordLength = word.length();
@@ -35,10 +35,13 @@ Dictionary::Dictionary() {
 }
 
 bool Dictionary::contains(const string& word) const {
-	// if (words.find(word) != words.end()) {
-	// 	return true;
-	// } 
-	return false;
+
+    for (const auto& w : words[word.length()]) {
+        if (w.get_word() == word) {
+            return true;
+        }
+    }
+    return false; // Word not found
 }
 
 vector<string> Dictionary::get_suggestions(const string& word) const {
