@@ -48,6 +48,7 @@ vector<string> Dictionary::get_suggestions(const std::string& word) const {
 	vector<string> suggestions;
     add_trigram_suggestions(suggestions, word);
     //rank suggestions EDIT DISTANCE
+    suggestions = rank_suggestions(word, suggestions);
     trim_suggestions(suggestions);
 	return suggestions;
 }
@@ -76,26 +77,48 @@ void Dictionary::trim_suggestions(vector<string>& suggestions) const {
     if (suggestions.size() > 5) suggestions.resize(5); 
 }
 
+vector<string> Dictionary::rank_suggestions(const std::string& word, const std::vector<std::string>& suggestions) const {
+    vector<std::pair<string, int>> rankedSuggestions;
+    for (const auto& s : suggestions) {
+        int distance = edit_distance(word, s);
+        rankedSuggestions.push_back(std::make_pair(s, distance));
+    }
 
-int edit_distance(const std::string& p, const std::string& q) {
-    int m = p.length(), n = q.length();
+    //sort by distance with for loop
+    for (int i = 0; i < rankedSuggestions.size(); i++) {
+        for (int j = i+1; j < int(rankedSuggestions.size()); j++) {
+            if (rankedSuggestions[i].second > rankedSuggestions[j].second) {
+                std::swap(rankedSuggestions[i], rankedSuggestions[j]);
+            }
+        }
+    }
+
+    vector<string> ranked;
+
+    for (const auto& pair : rankedSuggestions) {
+        ranked.push_back(pair.first);
+    }
+
+    return ranked;
+
+}
+
+
+int Dictionary::edit_distance(const std::string& s1, const std::string& s2) const{
+    int m = s1.length(), n = s2.length();
     std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1));
 
-    // Initialize the table
-    for(int i = 0; i <= m; i++){
-		dp[i][0] = i;
-	} 
-    for(int j = 0; j <= n; j++){
-		dp[0][j] = j;
-	} 
+    for(int i = 0; i <= m; i++) dp[i][0] = i;
+    for(int j = 0; j <= n; j++) dp[0][j] = j;
 
-    // Compute the distances
     for(int i = 1; i <= m; i++) {
         for(int j = 1; j <= n; j++) {
-            int cost = (p[i - 1] == q[j - 1]) ? 0 : 1;
-            dp[i][j] = std::min({ dp[i - 1][j - 1] + cost, // Substitution
-                                  dp[i - 1][j] + 1,       // Deletion
-                                  dp[i][j - 1] + 1 });    // Insertion
+            int cost = (s1[i - 1] == s2[j - 1]) ? 0 : 1;
+            int substitution = dp[i - 1][j - 1] + cost;
+            int deletion = dp[i - 1][j] + 1;
+            int insertion = dp[i][j - 1] + 1;
+            dp[i][j] = std::min(substitution, std::min(deletion, insertion));
+            
         }
     }
     return dp[m][n];
