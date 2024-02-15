@@ -14,6 +14,7 @@ public:
 	std::vector<std::string> computeTrigrams(const std::string& word) const;
 private:
 	std::vector<std::vector<Word>> words;
+	int add_trigram_suggestions(std::vector<string>& suggestions, const std::string& word) const;
 };
 
 #endif

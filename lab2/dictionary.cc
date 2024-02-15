@@ -44,11 +44,33 @@ bool Dictionary::contains(const string& word) const {
     return false; // Word not found
 }
 
-vector<string> Dictionary::get_suggestions(const string& word) const {
+vector<string> Dictionary::get_suggestions(const std::string& word) const {
 	vector<string> suggestions;
+    add_trigram_suggestions(suggestions, word);
 	return suggestions;
 }
 
+//check words with length-1 to length+1, append suggestions if >= half of trigrams match
+int Dictionary::add_trigram_suggestions(std::vector<string>& suggestions, const std::string& word) const{
+    int wlen = word.length();
+    if (wlen > maxlen) { //if word too long, discard
+        return 0;
+    }
+
+    std::vector<std::string> trigrams = computeTrigrams(word);
+    unsigned int halfTrigs = trigrams.size()/2;
+    
+    for (int i = wlen-1; i <= wlen+1; i++) {
+        for (const Word& dict_word : words[i]){ 
+            if (dict_word.get_matches(trigrams) >= halfTrigs) {
+                suggestions.push_back(dict_word.get_word());
+            }
+        }
+
+    }
+    return 0;
+    
+}
 
 
 int edit_distance(const std::string& p, const std::string& q) {
