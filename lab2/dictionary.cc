@@ -7,6 +7,7 @@
 #include "dictionary.h"
 #include <unordered_set>
 
+
 using std::string;
 using std::vector;
 using std::cout;
@@ -72,7 +73,7 @@ int edit_distance(const std::string& p, const std::string& q) {
 }
 
 //taken from preprocessor
-std::vector<std::string> computeTrigrams(const std::string& word) {
+std::vector<std::string> Dictionary::computeTrigrams(const std::string& word) const{
     std::vector<std::string> trigrams;
     for (size_t i = 0; i + 2 < word.size(); ++i) {
         auto trig = word.substr(i, 3);

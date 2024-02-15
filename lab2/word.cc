@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include "word.h"
+#include <algorithm>
 
 using std::vector;
 using std::string;
@@ -14,18 +15,29 @@ string Word::get_word() const {
 }
 
 //Returns how many of the trigrams in t that are present in this word’s trigram vector
+// unsigned int Word::get_matches(const vector<string>& t) const {
+// 	unsigned int count = 0;
+// 	//sort t
+// 	std::sort(t.begin(), t.end());
+// 	std::sort(trigrams.begin(), trigrams.end()); //just in case :))
+
+// 	int maxIndex = std::min(t.size(),trigrams.size());
+
+// 	for (int i = 0; i < maxIndex; i++) {
+// 		if (t[i].compare(trigrams[i]) == 0) {
+// 			count++;
+// 		}
+// 	}
+// 	return count;
+// }
+
 unsigned int Word::get_matches(const vector<string>& t) const {
-	unsigned int count = 0;
-	//sort t
-	std::sort(t.begin(), t.end());
-	std::sort(trigrams.begin(), trigrams.end()); //just in case :))
-
-	int maxIndex = std::min(t.size(),trigrams.size());
-
-	for (int i = 0; i < maxIndex; i++) {
-		if (t[i].compare(trigrams[i]) == 0) {
-			count++;
-		}
-	}
-	return count;
+    unsigned int count = 0;
+    for (const auto& trigram : t) {
+        // Use std::find to check if trigram is in this word's trigram vector
+        if (std::find(trigrams.begin(), trigrams.end(), trigram) != trigrams.end()) {
+            count++;
+        }
+    }
+    return count;
 }
