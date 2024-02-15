@@ -13,6 +13,10 @@ string Word::get_word() const {
 	return word;
 }
 
+unsigned int Word::nbr_trigrams() {
+	return trigrams.size();
+}
+
 //Returns how many of the trigrams in t that are present in this word’s trigram vector
 unsigned int Word::get_matches(const vector<string>& t) const {
 	unsigned int count = 0;
