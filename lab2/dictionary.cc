@@ -27,7 +27,7 @@ Dictionary::Dictionary() : words(maxlen){
         int wordLength = word.length();
         if (wordLength <= 25) {
             words[wordLength].push_back(Word(word, computeTrigrams(word)));
-            cout << "word: " << word << " inserted into vector" << endl;
+            //cout << "word: " << word << " inserted into vector" << endl;
         }
     }
 	inputFile.close(); //behövs detta?
@@ -47,14 +47,16 @@ bool Dictionary::contains(const string& word) const {
 vector<string> Dictionary::get_suggestions(const std::string& word) const {
 	vector<string> suggestions;
     add_trigram_suggestions(suggestions, word);
+    //rank suggestions EDIT DISTANCE
+    trim_suggestions(suggestions);
 	return suggestions;
 }
 
 //check words with length-1 to length+1, append suggestions if >= half of trigrams match
-int Dictionary::add_trigram_suggestions(std::vector<string>& suggestions, const std::string& word) const{
+void Dictionary::add_trigram_suggestions(vector<string>& suggestions, const std::string& word) const{
     int wlen = word.length();
     if (wlen > maxlen) { //if word too long, discard
-        return 0;
+        return;
     }
 
     std::vector<std::string> trigrams = computeTrigrams(word);
@@ -68,8 +70,10 @@ int Dictionary::add_trigram_suggestions(std::vector<string>& suggestions, const 
         }
 
     }
-    return 0;
-    
+}
+
+void Dictionary::trim_suggestions(vector<string>& suggestions) const {
+    if (suggestions.size() > 5) suggestions.resize(5); 
 }
 
 
