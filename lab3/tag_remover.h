@@ -8,11 +8,10 @@ class TagRemover {
 public:
     TagRemover(std::istream& input);
     void print(std::ostream& output);
-
-private:
-    std::string content;
     std::string removeTags(const std::string& input);
     std::string decodeSpecialChars(const std::string& input);
+private:
+    std::string content;
 };
 
 #endif // TAG_REMOVER_H
