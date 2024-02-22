@@ -29,9 +29,7 @@ void TagRemover::print(std::ostream& output) {
     output << decoded;
 }
 
-int main(){
-    
-    TagRemover tr(std::cin); // read from cin
-    tr.print(std::cout); // print on cout
-
-}
+// int main(){
+//     TagRemover tr(std::cin); // read from cin
+//     tr.print(std::cout); // print on cout
+// }
