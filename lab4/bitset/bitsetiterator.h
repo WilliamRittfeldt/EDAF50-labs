@@ -15,25 +15,27 @@ public:
 
     BitsetIterator(const BitsetIterator&) =default;
 
-	bool operator!=(const BitsetIterator& bsi) const {
-		return true;
-	}
+	// bool operator!=(const BitsetIterator& bsi) const {
+	// 	return true;
+	// }
+	bool operator!=(const BitsetIterator& bsi) const { return ref.pos != bsi.ref.pos; }
 
-	BitsetIterator& operator++() {
-		return *this;
-	}
+		BitsetIterator& operator++() {
+			++ref.pos; //NORAS
+			return *this;
+		}
 
-	BitReference operator*() {
-		return ref;
-	}
+		BitReference operator*() {
+			return ref;
+		}
 
-	BitsetIterator& operator=(const BitsetIterator& rhs) {
-		ref.p_bits = rhs.ref.p_bits;
-		ref.pos = rhs.ref.pos;
-		return *this;
-	}
-private:
-	BitReference ref;
+		BitsetIterator& operator=(const BitsetIterator& rhs) {
+			ref.p_bits = rhs.ref.p_bits;
+			ref.pos = rhs.ref.pos;
+			return *this;
+		}
+	private:
+		BitReference ref;
 };
 
 #endif

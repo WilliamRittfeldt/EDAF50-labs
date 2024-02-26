@@ -13,7 +13,7 @@
 using namespace std;
 
 void test(NameServerInterface& ns) {
-#if 0
+try{
 	ns.insert("www.Bosse.se", 1);
 	ns.insert("www.Ek.se", 2);
 	assert(ns.lookup("www.Bosse.se") == 1);
@@ -22,9 +22,21 @@ void test(NameServerInterface& ns) {
 	assert(! ns.remove("www.Nisse.se"));
 	assert(ns.remove("www.Bosse.se"));
 	assert(ns.lookup("www.Bosse.se") == NON_EXISTING_ADDRESS);
-#else
-    throw std::runtime_error{"test failed"};
-#endif
+}catch(const runtime_error& e){
+	throw std::runtime_error{"test failed"};
+}
+// #if 0
+// 	ns.insert("www.Bosse.se", 1);
+// 	ns.insert("www.Ek.se", 2);
+// 	assert(ns.lookup("www.Bosse.se") == 1);
+// 	assert(ns.lookup("www.Ek.se") == 2);
+// 	assert(ns.lookup("www.Nisse.se") == NON_EXISTING_ADDRESS);
+// 	assert(! ns.remove("www.Nisse.se"));
+// 	assert(ns.remove("www.Bosse.se"));
+// 	assert(ns.lookup("www.Bosse.se") == NON_EXISTING_ADDRESS);
+// #else
+//     throw std::runtime_error{"test failed"};
+// #endif
 }
 
 int main() {
